@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- DOCTYPE: indica al navegador que el documento usa HTML5 -->
+<html lang="es">
+
+<!-- <head>: metadatos, no se muestran en pantalla -->
+<head>
+  <meta charset="UTF-8" />
+  <!-- viewport: necesario para que el diseño Mobile First funcione correctamente -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Primera Página Web</title>
+
+  <!-- Bootstrap CSS por CDN: proporciona estilos y componentes listos para usar -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Fonts: tipografía para darle carácter a la página -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables de color (tema rosado pastel) ──────────── */
+    :root {
+      --ink:    #6d3b5e;
+      --paper:  #fff0f5;
+      --accent: #e8819a;
+      --mid:    #c9a0b4;
+      --light:  #fadadd;
+      --white:  #ffffff;
+    }
+
+    /* ── Reset base ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      /* Mobile First: estilos base pensados en pantallas pequeñas */
+      font-size: 1rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       NAVBAR (Bootstrap personalizado)
+       ══════════════════════════════════════════════ */
+    /* Sobreescribimos colores del navbar de Bootstrap */
+    .navbar {
+      background-color: var(--ink) !important;
+      border-bottom: 3px solid var(--accent);
+      padding: 0.8rem 1.2rem;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      color: var(--paper) !important;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-link {
+      color: var(--mid) !important;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--accent) !important;
+    }
+
+    /* Ícono hamburguesa: cambia color al tema */
+    .navbar-toggler {
+      border-color: var(--accent) !important;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23e8819a' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    /* ══════════════════════════════════════════════
+       HEADER — Mobile First (columna única)
+       ══════════════════════════════════════════════ */
+    /* <header>: encabezado principal de la página */
+    header.hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2.5rem 1.2rem;
+      border-bottom: 4px solid var(--accent);
+      /* Flexbox: organiza el contenido del header */
+      display: flex;
+      flex-direction: column;  /* columna en móvil */
+      gap: 0.5rem;
+    }
+
+    /* <h1>: título principal, uno solo por página */
+    header.hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 6vw, 2.8rem);
+      line-height: 1.15;
+    }
+
+    header.hero p {
+      color: var(--mid);
+      font-size: 0.9rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       TARJETAS DE PRODUCTOS — Flexbox Mobile First
+       ══════════════════════════════════════════════ */
+    .productos {
+      padding: 2rem 1.2rem;
+    }
+
+    .productos h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--accent);
+    }
+
+    /* Flexbox: fila de tarjetas, una por línea en móvil */
+    .tarjetas {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tarjeta {
+      background: var(--white);
+      border: 1px solid var(--light);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .tarjeta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       LAYOUT PRINCIPAL — CSS Grid Mobile First
+       ══════════════════════════════════════════════ */
+    /* <section>: sección temática del contenido */
+    .contenido-principal {
+      padding: 0 1.2rem 2rem;
+      /* CSS Grid: una columna en móvil */
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* <article>: contenido independiente y autocontenido */
+    article {
+      background: var(--white);
+      border: 1px solid var(--light);
+      border-left: 4px solid var(--accent);
+      padding: 1.4rem 1.6rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    article h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* <p>: párrafo de texto genérico */
+    p { margin-bottom: 0.8rem; color: #3a2a35; }
+    p:last-child { margin-bottom: 0; }
+
+    /* <aside>: contenido lateral / complementario */
+    aside {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1.4rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+    }
+
+    aside h2 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    aside ul { list-style: none; padding: 0; }
+
+    aside ul li {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    aside ul li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+    /* <footer>: pie de página */
+    footer {
+      background: var(--ink);
+      color: var(--mid);
+      text-align: center;
+      padding: 1.4rem 1rem;
+      font-size: 0.82rem;
+      border-top: 3px solid var(--accent);
+    }
+
+    footer span { color: var(--accent); font-weight: bold; }
+
+    /* ══════════════════════════════════════════════
+       MEDIA QUERY 1 — Tablet (≥ 640px)
+       ══════════════════════════════════════════════ */
+    @media (min-width: 640px) {
+      header.hero {
+        /* Flexbox en fila para tablet */
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3rem 2rem;
+      }
+
+      /* Tarjetas: 2 columnas en tablet */
+      .tarjetas {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .tarjeta {
+        flex: 1 1 calc(50% - 0.5rem);
+      }
+    }
+
+    /* ══════════════════════════════════════════════
+       MEDIA QUERY 2 — Desktop (≥ 1024px)
+       ══════════════════════════════════════════════ */
+    @media (min-width: 1024px) {
+      header.hero {
+        padding: 3.5rem 3rem;
+      }
+
+      .productos { padding: 2.5rem 3rem; }
+
+      /* Tarjetas: 3 columnas en desktop */
+      .tarjeta {
+        flex: 1 1 calc(33.333% - 0.7rem);
+      }
+
+      .contenido-principal {
+        padding: 0 3rem 3rem;
+        /* CSS Grid: 2 columnas en desktop (contenido + aside) */
+        grid-template-columns: 1fr 280px;
+      }
+
+      /* aside ocupa ambas filas de artículos */
+      aside {
+        grid-row: 1 / 3;
+        align-self: start;
+      }
+    }
+  </style>
+</head>
+
+<!-- <body>: todo el contenido visible de la página -->
+<body>
+
+  <!-- ── NAVBAR Bootstrap ──────────────────────────────────
+       Componente de Bootstrap. En móvil colapsa en menú hamburguesa.
+       En desktop muestra los enlaces completos. -->
+  <nav class="navbar navbar-expand-md">
+    <div class="container-fluid">
+
+      <!-- Marca/logo del sitio -->
+      <a class="navbar-brand" href="#">MiSitio</a>
+
+      <!-- Botón hamburguesa: visible solo en móvil -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#menuNav"
+        aria-controls="menuNav"
+        aria-expanded="false"
+        aria-label="Abrir menú"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Menú colapsable -->
+      <div class="collapse navbar-collapse" id="menuNav">
+        <ul class="navbar-nav ms-auto gap-1">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contacto</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav><!-- fin navbar -->
+
+  <!-- <header>: encabezado de la página con Flexbox -->
+  <header class="hero">
+    <!-- <h1>: título principal, uno solo por página -->
+    <h1>Mi Primera Página Web</h1>
+    <!-- <p>: párrafo descriptivo del header -->
+    <p>Diseño responsivo · Bootstrap · Mobile First</p>
+  </header>
+
+  <!-- Tarjetas de productos — organizadas con Flexbox -->
+  <div class="productos">
+    <h2>Productos destacados</h2>
+    <!-- Las tarjetas usan Flexbox: 1 col móvil → 2 col tablet → 3 col desktop -->
+    <div class="tarjetas">
+      <div class="tarjeta">
+        <h3>Producto A</h3>
+        <!-- <p>: descripción del producto -->
+        <p>Descripción breve del primer producto destacado.</p>
+      </div>
+      <div class="tarjeta">
+        <h3>Producto B</h3>
+        <p>Descripción breve del segundo producto destacado.</p>
+      </div>
+      <div class="tarjeta">
+        <h3>Producto C</h3>
+        <p>Descripción breve del tercer producto destacado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- <section>: sección temática que contiene artículos + aside
+       Usa CSS Grid: 1 columna en móvil, 2 columnas en desktop -->
+  <section class="contenido-principal">
+
+    <!-- <article>: contenido independiente y autocontenido -->
+    <article>
+      <h3>¿Qué es HTML?</h3>
+      <!-- <p>: párrafo de contenido del artículo -->
+      <p>
+        HTML (HyperText Markup Language) es el lenguaje estándar para crear
+        páginas web. Define la estructura y el significado semántico del contenido.
+      </p>
+      <p>
+        Junto con CSS y JavaScript, forma la base de toda página web moderna.
+      </p>
+    </article>
+
+    <!-- Segundo <article>: independiente del anterior -->
+    <article>
+      <h3>Diseño Mobile First</h3>
+      <p>
+        El enfoque Mobile First consiste en escribir los estilos CSS pensando
+        primero en pantallas pequeñas y luego ampliar con media queries para
+        dispositivos más grandes.
+      </p>
+      <p>
+        Esto garantiza que la experiencia en móvil sea óptima desde el principio.
+      </p>
+    </article>
+
+    <!-- <aside>: barra lateral con información complementaria -->
+    <aside>
+      <h2>Tecnologías usadas</h2>
+      <ul>
+        <li>HTML5 semántico</li>
+        <li>CSS Mobile First</li>
+        <li>Flexbox (tarjetas)</li>
+        <li>CSS Grid (layout)</li>
+        <li>Media Queries ×2</li>
+        <li>Bootstrap 5 Navbar</li>
+      </ul>
+    </aside>
+
+  </section><!-- fin <section> -->
+
+  <!-- <footer>: pie de página con datos de cierre -->
+  <footer>
+    <p>Creado con <span>&lt;/&gt;</span> · Actividad práctica HTML + Bootstrap · 2026</p>
+  </footer>
+
+  <!-- Bootstrap JS por CDN: necesario para que el menú hamburguesa funcione -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
